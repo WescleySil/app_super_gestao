@@ -15,8 +15,7 @@ return new class extends Migration
     {
         //
         Schema::table('fornecedores', function (Blueprint $table){
-            $table->string('uf', 2);
-            $table->string('email', 150);
+            $table->string('site',150)->after('nome')->nullable();
         });
     }
 
@@ -28,7 +27,8 @@ return new class extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('uf');
-        Schema::dropIfExists('email');
+        Schema::table('fornecedores', function (Blueprint $table){
+            $table->dropColumn('site');
+        });
     }
 };

@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         //
-        Schema::table('fornecedores', function (Blueprint $table){
-            $table->string('uf', 2);
-            $table->string('email', 150);
+
+        Schema::table('fornecedores', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -28,7 +28,8 @@ return new class extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('uf');
-        Schema::dropIfExists('email');
+        Schema::table('fornecedores', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
     }
 };
