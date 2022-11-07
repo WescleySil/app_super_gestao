@@ -23,7 +23,7 @@
             <img src="{{ asset('img/player_video.jpg')}}">
         </div>
     </div>
-
+    
     <div class="direita">
         <div class="contato">
             <h1>Contato</h1>
@@ -33,4 +33,5 @@
         </div>
     </div>
 </div>
+
 @endsection
