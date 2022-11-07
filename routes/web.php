@@ -26,7 +26,7 @@ Route::get('/sobre', [SobreController::class, 'sobre'])->name('site.sobre');
 
 //Página Contato
 Route::get('/contato', [ContatoController::class , 'contato'])->name('site.contato');
-Route::post('/contato', [ContatoController::class , 'contato'])->name('site.contato');
+Route::post('/contato', [ContatoController::class , 'salvar'])->name('site.contato');
 
 Route::get('/login', function(){ return 'Login';})->name('site.login');
 
