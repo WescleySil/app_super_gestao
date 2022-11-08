@@ -16,8 +16,10 @@ class AutenticacaoMiddleware
      */
     public function handle(Request $request, Closure $next, $metodo_autenticacao)
     {
+        if($metodo_autenticacao == 'padrao'){
+            echo "Verificar usuário e senha no banco de dados";
+        }
         if(true){
-
             return $next($request);
         }else{
 
