@@ -20,7 +20,15 @@ class ContatoController extends Controller
             'email' => 'email',
             'motivo_contatos_id' => 'required',
             'mensagem' => 'required | max:2000'
-            ]);
+        ],
+        [
+            'required' => 'O campo :attribute precisa ser preenchido!',
+            'min' => 'O campo :attribute precisa ter no minímo 3 caracteres!',
+            'mensagem.max' => 'O campo :attribute deve ter no máximo 40 caracteres!',
+            'nome.max' => 'O campo :attribute deve ter no máximo 2000 caracteres!',
+            'email' => 'O campo :attribute deve ser um email válido',
+        ]
+        );
         if(SiteContato::create($request->all()) == true){
         $msg = "Mensagem cadastrada com sucesso";
         return redirect()->route('site.index')->with('status', $msg);
