@@ -7,6 +7,9 @@ use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\SobreController;
 use App\Http\Controllers\FornecedorController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ProdutoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +37,12 @@ Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login'
 
 /* Parte restrita */
 
-Route::prefix('/app')->middleware('aute:padrao')->group(function(){
-    Route::get('/clientes', function(){ return 'Clientes';})->name('app.clientes');
+Route::middleware('aute:padrao')->prefix('/app')->group(function(){
+    Route::get('/home', [HomeController::class, 'index'])->name('app.home');
+    Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
+    Route::get('/clientes', [ClienteController::class,'index'])->name('app.clientes');
     Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
-    Route::get('/produtos', function(){ return 'Produtos';})->name('app.produtos');
+    Route::get('/produtos', [ProdutoController::class, 'index'])->name('app.produtos');
 
 });
 
