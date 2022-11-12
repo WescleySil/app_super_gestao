@@ -42,6 +42,9 @@ Route::middleware('aute:padrao')->prefix('/app')->group(function(){
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
     Route::get('/clientes', [ClienteController::class,'index'])->name('app.clientes');
     Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
+    Route::post('/fornecedores/listar', [FornecedorController::class, 'listar'])->name('app.fornecedores.listar');
+    Route::get('/fornecedores/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedores.adicionar');
+    Route::post('/fornecedores/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedores.adicionar');
     Route::get('/produtos', [ProdutoController::class, 'index'])->name('app.produtos');
 
 });
