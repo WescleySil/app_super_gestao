@@ -41,10 +41,14 @@ Route::middleware('aute:padrao')->prefix('/app')->group(function(){
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
     Route::get('/clientes', [ClienteController::class,'index'])->name('app.clientes');
+
     Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
+    Route::get('/fornecedores/listar', [FornecedorController::class, 'listar'])->name('app.fornecedores.listar');
     Route::post('/fornecedores/listar', [FornecedorController::class, 'listar'])->name('app.fornecedores.listar');
     Route::get('/fornecedores/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedores.adicionar');
     Route::post('/fornecedores/adicionar', [FornecedorController::class, 'adicionar'])->name('app.fornecedores.adicionar');
+    Route::get('/fornecedores/editar/{id}/{msg?}', [FornecedorController::class, 'editar'])->name('app.fornecedores.editar');
+
     Route::get('/produtos', [ProdutoController::class, 'index'])->name('app.produtos');
 
 });
