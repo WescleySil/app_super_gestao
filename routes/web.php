@@ -42,6 +42,7 @@ Route::middleware('aute:padrao')->prefix('/app')->group(function(){
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
     Route::get('/clientes', [ClienteController::class,'index'])->name('app.clientes');
 
+    //Fornecedores
     Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
     Route::get('/fornecedores/listar', [FornecedorController::class, 'listar'])->name('app.fornecedores.listar');
     Route::post('/fornecedores/listar', [FornecedorController::class, 'listar'])->name('app.fornecedores.listar');
@@ -50,7 +51,7 @@ Route::middleware('aute:padrao')->prefix('/app')->group(function(){
     Route::get('/fornecedores/editar/{id}/{msg?}', [FornecedorController::class, 'editar'])->name('app.fornecedores.editar');
     Route::get('/fornecedores/excluir/{id}', [FornecedorController::class, 'excluir'])->name('app.fornecedores.excluir');
 
-    Route::get('/produtos', [ProdutoController::class, 'index'])->name('app.produtos');
+    Route::resource('produtos', ProdutoController::class);
 
 });
 
