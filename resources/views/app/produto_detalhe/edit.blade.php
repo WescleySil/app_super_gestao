@@ -6,7 +6,7 @@
     <div class="conteudo-pagina">
 
         <div class="titulo-pagina-2">
-            <p>Produto - Adicionar</p>
+            <p>Produto - Editar Detalhes</p>
         </div>
 
         <div class="menu">
@@ -14,15 +14,23 @@
                 <li>
                     <a href="{{route('produtos.index')}}">Voltar</a>
                 </li>
-                <li>
-                    <a href="">Consulta</a>
-                </li>
             </ul>
         </div>
 
         <div class="informacao-pagina">
             <div style="width:30%; margin-left: auto; margin-right: auto;">
-                @component('app.produto._components.form_create_edit', ['unidades' => $unidades])
+
+                <h4> Produto </h4>
+
+                <div>
+                    Nome:  {{$produtoDetalhe->produto->nome}}
+                </div>
+                <br>
+                <div>
+                    Descrição: {{$produtoDetalhe->produto->descricao}}
+                </div>
+                <br>
+                @component('app.produto_detalhe._components.form_create_edit', ['unidades'=> $unidades , 'produtoDetalhe' => $produtoDetalhe])
 
                 @endcomponent
             </div>

@@ -26,9 +26,14 @@
                             <th>Descrição</th>
                             <th>Peso</th>
                             <th>Unidade ID</th>
+                            <th>Comprimento</th>
+                            <th>Altura</th>
+                            <th>Largura</th>
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th>Detalhes</th>
+                            <th>Aapagar</th>
                         </tr>
                     </thead>
 
@@ -39,9 +44,28 @@
                                 <td>{{ $produto->descricao }}</td>
                                 <td>{{ $produto->peso }}</td>
                                 <td>{{ $produto->unidade_id }}</td>
-                                <td><a href="">Excluir</a></td>
-                                <td><a href="">Editar</a></td>
+                                <td>{{ $produto->produtoDetalhe->comprimento ?? ''}}</td>
+                                <td>{{ $produto->produtoDetalhe->largura ?? '' }}</td>
+                                <td>{{ $produto->produtoDetalhe->altura ?? '' }}</td>
+                                <td>
+                                    <form id="delete" action="{{route('produtos.destroy', ['produto' =>$produto->id]) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a href="#" onclick="document.getElementById('delete').submit()">Excluir</a>
+                                    </form>
+                                </td>
+                                <td><a href="{{route('produtos.edit', ['produto' => $produto->id])}}">Editar</a></td>
                                 <td><a href="{{route('produtos.show', ['produto' => $produto->id])}}">Visualizar</a></td>
+                                @if(isset($produto->produtoDetalhe->comprimento))
+                                <td><a href="{{route('produto-detalhe.edit', ['produto_detalhe' => $produto->produtoDetalhe->id])}}">Editar Detalhes</a></td>
+                                <td> <form action="{{route('produto-detalhe.destroy', ['produto_detalhe' => $produto->produtoDetalhe])}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">Apagar Detalhes</button>
+                                </form></td>
+                                @else
+                                <td><a href="{{route('produto-detalhe.create', ['produto' => $produto->id])}}">Adicionar Detalhes</a></td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
