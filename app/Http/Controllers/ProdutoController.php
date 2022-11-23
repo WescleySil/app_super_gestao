@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use App\Models\Unidade;
+use App\Models\Fornecedor;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -30,8 +31,10 @@ class ProdutoController extends Controller
     {
         //
         $unidades = Unidade::all();
+        $fornecedores = Fornecedor::all();
         return view('app.produto.create', [
-            'unidades' => $unidades
+            'unidades' => $unidades,
+            'fornecedores' => $fornecedores
         ]);
     }
 
@@ -48,7 +51,8 @@ class ProdutoController extends Controller
             'nome' => ' required|min:3|max:40',
             'descricao' => 'required|min:3|max:2000',
             'peso' => 'required|integer',
-            'unidade_id' => 'exists:unidades,id'
+            'unidade_id' => 'exists:unidades,id',
+            'fornecedor_id' => 'exists:fornecedores,id'
         ];
 
         $feedback = [
@@ -57,7 +61,8 @@ class ProdutoController extends Controller
             'nome.max' => 'O campo :attribute deve ter no máximo 40 caracteres',
             'descricao.max' => 'O campo :attribute deve ter no máximo 2000 caracteres',
             'integer' => 'O campo :attribute deve ser um número inteiro',
-            'exists' => 'A unidade de medida informada não existe'
+            'unidade_id.exists' => 'A unidade de medida informada não existe',
+            'fornecedor_id.exists' => 'O Fornecedor informado não existe'
         ];
 
         $request->validate($rules,$feedback);
@@ -87,8 +92,10 @@ class ProdutoController extends Controller
     public function edit(Produto $produto)
     {
         //
+        $produto = $produto;
         $unidades = Unidade::all();
-        return view('app.produto.create', ['produto' => $produto, 'unidades' => $unidades]);
+        $fornecedores = Fornecedor::all();
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -101,6 +108,25 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
         //
+        $rules = [
+            'nome' => ' required|min:3|max:40',
+            'descricao' => 'required|min:3|max:2000',
+            'peso' => 'required|integer',
+            'unidade_id' => 'exists:unidades,id',
+            'fornecedor_id' => 'exists:fornecedores,id'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute é obrigatório',
+            'min' => 'O campo :attribute deve ter no minímo 3 caracteres',
+            'nome.max' => 'O campo :attribute deve ter no máximo 40 caracteres',
+            'descricao.max' => 'O campo :attribute deve ter no máximo 2000 caracteres',
+            'integer' => 'O campo :attribute deve ser um número inteiro',
+            'unidade_id.exists' => 'A unidade de medida informada não existe',
+            'fornecedor_id.exists' => 'O Fornecedor informado não existe'
+        ];
+
+        $request->validate($rules,$feedback);
         $request->all(); // payload
 
         $produto->update($request->all());
