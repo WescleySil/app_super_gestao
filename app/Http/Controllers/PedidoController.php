@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pedido;
 use App\Models\Cliente;
 
-class ClienteController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,8 @@ class ClienteController extends Controller
     public function index(Request $request)
     {
         //
-        $clientes = Cliente::paginate(10);
-
-        return view('app.cliente.index', ['clientes' => $clientes,'request' => $request->all()]);
+        $pedidos = Pedido::paginate(10);
+        return view('app.pedido.index', ['pedidos' => $pedidos, 'request' => $request->all()]);
     }
 
     /**
@@ -28,7 +28,8 @@ class ClienteController extends Controller
     public function create()
     {
         //
-        return view('app.cliente.create');
+        $clientes = Cliente::all();
+        return view('app.pedido.create', ['clientes' => $clientes]);
     }
 
     /**
@@ -40,23 +41,22 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         //
-        $regras =[
-            'nome' => 'required|min:3|max:40'
+        $regras = [
+            'clientes_id' => 'exists:clientes,id'
         ];
 
-        $feedback=[
-            'required' => 'O campo :attribute precisa ser preenchido',
-            'min' => 'O campo :attribute precisa ter no mínimo 3 caracteres',
-            'max' => 'O campo :attribute pode ter no máximo 40 caracteres',
+        $feedback = [
+            'clientes_id.exists' => 'O cliente informado não existe'
         ];
 
         $request->validate($regras, $feedback);
 
-        $clientes = new Cliente();
-        $clientes->nome = $request->get('nome');
-        $clientes->save();
+        $pedido = new Pedido();
 
-        return redirect()->route('clientes.index');
+        $pedido->cliente_id = $request->get('cliente_id');
+        $pedido->save();
+
+        return redirect()->route('pedidos.index');
     }
 
     /**

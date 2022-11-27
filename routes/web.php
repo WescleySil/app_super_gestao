@@ -11,7 +11,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProdutoDetalheController;
-
+use App\Http\Controllers\PedidoProdutoController;
+use App\Http\Controllers\PedidoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,7 +42,7 @@ Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login'
 Route::middleware('aute:padrao')->prefix('/app')->group(function(){
     Route::get('/home', [HomeController::class, 'index'])->name('app.home');
     Route::get('/sair', [LoginController::class, 'sair'])->name('app.sair');
-    Route::get('/clientes', [ClienteController::class,'index'])->name('app.clientes');
+
 
     //Fornecedores
     Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
@@ -56,6 +57,14 @@ Route::middleware('aute:padrao')->prefix('/app')->group(function(){
 
     Route::resource('produto-detalhe', ProdutoDetalheController::class);
 
+    Route::resource('clientes', ClienteController::class);
+
+    Route::resource('pedidos', PedidoController::class);
+
+    //Route::resource('pedido-produto', ProdutoPedidoController::class);
+
+    Route::get('/pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'create'])->name('pedido-produto.create');
+    Route::post('/pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
 });
 
 Route::fallback(function(){
